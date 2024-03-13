@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - DATABASE_NAME=${DATABASES_NAME}
+      - DATABASE_USER=${DATABASES_USER}
+      - DATABASE_PASSWORD=${DATABASES_PASSWORD}
+      - DATABASE_PORT=${DATABASES_PORT}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: bash -c "cd /site-gym/core && python manage.py migrate --noinput &&
+                        python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/site-gym/core
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

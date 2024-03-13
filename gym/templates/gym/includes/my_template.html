@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вывод</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Получить">
+    </form>
+    {% if result %}
+    <p>Result: {{ result }}</p>
+    {% endif %}
+</body>
+</html>

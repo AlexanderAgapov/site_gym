@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filter Users</title>
+</head>
+<body>
+<h2>Отфильтровать клиентов</h2>
+<form method="post">
+    {% csrf_token %}
+    <p><label for="min_age">Возраст от:</label> <input type="number" name="min_age" id="min_age" value="1">
+    <label for="max_age">Возраст до:</label> <input type="number" name="max_age" id="max_age" value="100"></p>
+    <p><label for="min_birtday">Рождён с:</label> <input type="date" name="min_birtday" id="min_birtday" value="1950-01-01">
+    <label for="max_birtday">Рождён по:</label> <input type="date" name="max_birtday" id="max_birtday" value="2025-01-01"></p>
+    <p><label for="min_visit">Последнее посещение с:</label> <input type="date" name="min_visit" id="min_visit" value="1950-01-01">
+    <label for="max_visit">Последнее посещение до:</label> <input type="date" name="max_visit" id="max_visit" value="2025-01-01"></p>
+    <p><label for="min_join">Присоединился с:</label> <input type="date" name="min_join" id="min_join" value="1950-01-01">
+    <label for="max_join">Присоединился до:</label> <input type="date" name="max_join" id="max_join" value="2025-01-01"></p>
+    <p><label for="active">Действующий абонемент</label> <input type="checkbox" name="active" id="active" checked value="False"></p>
+
+    <p><input type="submit" value="Получить"></p>
+</form>
+
+<ul>
+    {% if users %}
+    <ul>
+        {% for user in users %}
+            <li> ------------------------------------------------------------------------------------------------------------------------------------------------ </li>
+            <li> username: {{ user.username }}, first_name: {{ user.first_name }}, last_name: {{ user.last_name }}, age: {{ user.age }}, phone_number: {{ user.phone_number }} </li>
+            <li> activate: {{ user.subscription_is_activate }}, birth day: {{ user.birth_day }}, last_login: {{ user.last_login }}, date_joined: {{ user.date_joined }} </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ничего не найдено</p>
+    {% endif %}
+</ul>
+</body>
+</html>
